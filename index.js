@@ -49,8 +49,7 @@ app.use(logger('dev'));
     if (req.isAuthenticated()) return res.redirect("/");
     next();
   };
-  app.use(express.static(path.join(__dirname, 'build_client')));
-  app.use(express.static(path.join(__dirname, 'build_auth')));
+ 
   
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
@@ -67,7 +66,9 @@ app.use(logger('dev'));
     // res.send('welcom')
     res.sendFile(path.join(__dirname, 'build_client', 'index.html'));
   });
-	
+  app.use(express.static(path.join(__dirname, 'build_client')));
+  app.use(express.static(path.join(__dirname, 'build_auth')));
+  
 	app.get("/logout", restricAccess, (req, res) => {
     req.logout();
     res.redirect('/');
