@@ -33,9 +33,9 @@ router.post(
   // passport.authenticate("local"), (req, res)=> res.redirect('/')
 );
 
-router.get('/getUserInfos/:id', async (req, res)=>{
+router.get('/getUserInfos/', async (req, res)=>{
   try {
-    const id = req.params.id;
+    const id = req.user._id
     // console.log("get user info by id =", id)
     const user = await User.findById(id);
     if(user){
