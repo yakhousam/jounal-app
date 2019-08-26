@@ -1,0 +1,87 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .note-list{
+    flex: 1;
+  }
+  .display-note{
+    flex: 1;
+  }
+.search {
+    background: purple;
+    padding: 1em;
+  }
+  .nav{
+    background: green;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.new-note {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: rgba(160, 160, 160, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .new-note form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fafafa;
+    min-width: 50%;
+    height: 95vh;
+  }
+  .btn-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  .new-note textarea {
+    width: 70%;
+    height: 50%;
+  }
+  .note-display{
+    flex: 1;
+  margin-left: 1em;
+  }
+
+  .notes-list {
+    flex: 1;
+  }
+  .note-item {
+    cursor: pointer;
+    border-bottom: thin solid gray;
+  }
+   .note-item:nth-child(odd) {
+    background: skyblue;
+  }
+  .note-item:nth-child(even) {
+    background: lime;
+  }
+  .note-list h2 {
+    margin: 0;
+  }
+
+  .tool-bar{
+    padding: 1em;
+}
+    .tool-bar button{
+        width: 30px;
+        height: 30px;
+        background:  url('/static/add-256.ico') center / 90% no-repeat;
+    }
