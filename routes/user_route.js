@@ -59,7 +59,7 @@ router.get('/auth/github',
   passport.authenticate('github', { failureRedirect: '/auth' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect(req.session.redirectTo || '/');
+    res.redirect('/');
 });
 
 module.exports = router;
