@@ -3,7 +3,7 @@ require("./db");
 
 const path = require('path');
 const express = require("express");
-const cors = require('cors')
+// const cors = require('cors')
 
 const route = require("./routes");
 const passport = require("passport");
@@ -25,7 +25,7 @@ const port = process.env.PORT || 3001;
 
 app.use(logger('dev'));
 
-app.use(cors());
+// app.use(cors());
 
  auth();
   app.use(
