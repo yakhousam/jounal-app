@@ -55,8 +55,11 @@ router.get('/getUserInfos/', async (req, res)=>{
 router.get('/auth/github',
   passport.authenticate('github'));
 
-router.get('/auth/github/callback', 
-  passport.authenticate('github'), (req, res)=> res.status(200).json({userId: req.user._id}));
-
+  router.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/auth' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect(req.session.redirectTo || '/');
+});
 
 module.exports = router;
