@@ -35,12 +35,12 @@ router.post(
 
 router.get('/getUserInfos/', async (req, res)=>{
   try {
-    const id = req.user._id
-    // console.log("get user info by id =", id)
+    const id = req.user._id;
+    //  console.log("get user info by id =", id)
     const user = await User.findById(id);
     if(user){
       if(user.local){
-        return res.status(200).json({username: user.local.username})
+        return res.status(200).json({username: user.local.username || user.social.github.username})
       }else{
         res.status(400).json({error: 'User not found'})
       }
@@ -50,5 +50,13 @@ router.get('/getUserInfos/', async (req, res)=>{
     res.status(500).json({error: 'server error'})
   }
 })
+
+// github login
+router.get('/auth/github',
+  passport.authenticate('github'));
+
+router.get('/auth/github/callback', 
+  passport.authenticate('github'), (req, res)=> res.status(200).json({userId: req.user._id}));
+
 
 module.exports = router;

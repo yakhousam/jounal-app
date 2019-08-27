@@ -1,2 +1,0 @@
-body,html{margin:0;padding:0;box-sizing:border-box}.container{display:flex;flex-wrap:wrap;width:100vw;height:100vh;background:#87ceeb}form{display:flex;flex-direction:column;width:400px;margin:80px auto}button,input{box-sizing:border-box;height:3em;margin:1em}.local-login{flex:2 1;border:thin solid red}.social-login{flex:1 1;border:thin green;display:flex;flex-direction:column;justify-content:center}span{color:#00f;text-decoration:underline;cursor:pointer}span:hover{color:purple}
-/*# sourceMappingURL=main.432f3770.chunk.css.map */

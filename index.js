@@ -54,7 +54,15 @@ app.use(logger('dev'));
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  app.use('/api', restricAccess)  
+  if(dev){
+    app.use((req, res, next)=>{
+      req.user = {_id :"5d63b8053815719539b66c02", local:{username:'yakhousam'}};
+      next();
+    })
+  }else{
+    app.use('/api', restricAccess)  
+  }
+  
   
   app.use(route);
 

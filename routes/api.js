@@ -4,16 +4,58 @@ const Journal = require('../models/journal')
 
 router.get("/api/getListeNotes/", async (req, res) => {
   const userId = req.user._id
-  const query = req.query
-  console.log('getlist query =', query)
+  let query = req.query;
+  if(!query.date || query.date === 'month'){
+    const date = new Date();
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+    const queryDate = new Date(`${year}-${month}-01`);
+    query.date = {date_create: {$gt: queryDate}}
+   
+  }
+  if(query.date === 'day'){
+    const dt = new Date();
+    const month = dt.getMonth() + 1
+    const year = dt.getFullYear()
+    const day = dt.getDate()
+    
+    const queryDate = new Date(`${year}-${month}-${day}`);
+    query.date = {date_create: {$gt: queryDate}}
+   
+  }
+  if(query.date === 'all'){
+    query.date={date_create: {$gte: new Date('1970-01-01')}}
+   
+  }
+  if(query.dateCalendar){
+    const dts = new Date(query.dateCalendar)
+    let dte = new Date(query.dateCalendar)
+    dte.setDate(dte.getDate() + 1);
+
+    query.date={date_create: {$gte: dts, $lt: dte}}
+   
+  }
+  if(!query.title) {
+    console.log("query !!!!!!!! ", query)
+    req.query = query.date
+     console.log("query !!!!!!!! ", query)
+  }else{
+    delete req.query.date
+  }
+ 
   try {
-    const filter = {userId, ...query}
+    const filter = {userId, ...req.query}
     // const filter ={}
+    console.log('----------------------------------------------------------------------------------')
     console.log('getlistNotes filter =', filter)
-    const notes = await Journal.find(filter)
+    const notes = await Journal.find(filter).sort({date_create: -1})
     // console.log('user id=', id)
     // console.log('getListeNotes =', notes)
-    res.json(notes)
+   
+    res.json( notes.map(note=>{
+      if(note.text.length>50) note.text = note.text.slice(0, 50) + '...';
+      return note;
+    }))
   } catch (error) {
     console.error(error)
     res.json(error)

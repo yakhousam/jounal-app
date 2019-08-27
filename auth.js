@@ -1,5 +1,6 @@
 const passport = require("passport");
 const localStrategie = require("passport-local");
+const GitHubStrategy = require('passport-github').Strategy;
 const bcrypt = require("bcrypt");
 const User = require("./models/user");
 
@@ -27,6 +28,28 @@ passport.use(
     }
   })
 );
+
+// github strategy
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: "https://journalapp-yakhousam.herokuapp.com/auth/github/callback" 
+
+},
+function(accessToken, refreshToken, profile, cb) {
+  const update = {
+    social: { github: { 
+      id: profile.id, 
+      username: profile.username,
+      photo: profile.photos[0].value 
+    } }
+  };
+  User.findOneAndUpdate({ "social.github.id": profile.id},update , { upsert: true , new: true,  useFindAndModify: false }, function (err, user) {
+    return cb(err, user);
+  });
+}
+));
+
 
 module.exports = function() {
   passport.serializeUser((user, done) => {
