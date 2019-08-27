@@ -3,6 +3,7 @@ require("./db");
 
 const path = require('path');
 const express = require("express");
+const cors = require('cors')
 
 const route = require("./routes");
 const passport = require("passport");
@@ -24,7 +25,7 @@ const port = process.env.PORT || 3001;
 
 app.use(logger('dev'));
 
-// app.use(cors());
+app.use(cors());
 
  auth();
   app.use(
@@ -54,16 +55,16 @@ app.use(logger('dev'));
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  if(dev){
-    app.use((req, res, next)=>{
-      req.user = {_id :"5d63b8053815719539b66c02", local:{username:'yakhousam'}};
-      next();
-    })
-  }else{
-    app.use('/api', restricAccess)  
-  }
+  // if(dev){
+  //   app.use((req, res, next)=>{
+  //     req.user = {_id :"5d63b8053815719539b66c02", local:{username:'yakhousam'}};
+  //     next();
+  //   })
+  // }else{
+  //   app.use('/api', restricAccess)  
+  // }
   
-  
+  app.use('/api', restricAccess)
   app.use(route);
 
   app.get('/auth', isLogedIn, (req, res) =>{
